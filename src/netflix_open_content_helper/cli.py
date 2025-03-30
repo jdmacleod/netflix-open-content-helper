@@ -5,8 +5,6 @@ import typer
 
 from netflix_open_content_helper import CONFIG, __version__
 
-from .helper import greet
-
 
 def download_from_s3(s3_uri: str, s3_path: str, dest_path: str = ".") -> None:
     """
@@ -118,7 +116,7 @@ def download(
     if not s3_basename:
         raise ValueError(f"S3 basename is not configured for {name}.")
     # Check if the S3 basename is valid
-    if not "%" in s3_basename:
+    if "%" not in s3_basename:
         raise ValueError(
             f"Invalid S3 basename format {s3_basename}. Must contain a frame wildcard like %04d."
         )

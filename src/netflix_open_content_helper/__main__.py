@@ -1,6 +1,4 @@
 if __name__ == "__main__":
-    import sys
-
     from netflix_open_content_helper.cli import app
 
     # Check if the script is being run directly
