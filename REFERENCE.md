@@ -1,4 +1,4 @@
-# Netflix Open Content Helper
+# Modern Python Project Template
 
 A comprehensive template for Python projects following modern development practices. This template includes a working example package (a simple calculator) to demonstrate project structure, testing patterns, and development workflows.
 
@@ -170,9 +170,3 @@ This template is MIT licensed. See the [LICENSE](LICENSE) file for details.
 ## Credits
 
 Created and maintained by [Your Name/Organization]. This template is designed to provide a solid foundation for Python projects while demonstrating best practices through working examples.
-
-## Reference
-
-See the [REFERENCE.md](./REFERENCE.md) for details on how this project is set up.
-
-Using [Marc Goodner's Python Template](https://github.com/robotdad/python-template)
