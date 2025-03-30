@@ -32,4 +32,5 @@ repos:
       - id: mypy
         additional_dependencies:
           - pydantic>=2.0.0
+          - types-PyYAML
         args: ["--config-file=pyproject.toml"]
