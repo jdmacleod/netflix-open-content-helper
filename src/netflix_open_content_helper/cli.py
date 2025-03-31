@@ -55,13 +55,17 @@ def browse() -> None:
     """
     Open a web browser for Netflix Open Content.
     """
-    typer.echo("Open a new web browser pointed to the Open Content.")
     NETFLIX_OPEN_CONTENT_URL = CONFIG["netflix_open_content_url"]
+    # Check if the URL is configured
     if not NETFLIX_OPEN_CONTENT_URL:
-        raise ValueError("Netflix Open Content URL is not configured.")
+        raise ValueError(
+            "Netflix Open Content URL is not configured. Check the config file."
+        )
     # Check if the URL is valid
     if not NETFLIX_OPEN_CONTENT_URL.startswith(("http://", "https://")):
-        raise ValueError("Invalid URL format.")
+        raise ValueError(
+            f"Invalid URL format for url {NETFLIX_OPEN_CONTENT_URL}. Should start with 'http://' or 'https://'."
+        )
     # Open the URL in the default web browser
     # This will open the URL in a new tab if the browser is already open
     # or in a new window if the browser is not open
@@ -78,10 +82,9 @@ def download(
     frame_end: int = typer.Option(2, help="The end frame for the download."),
 ) -> None:
     """
-    Download frame content from Netflix Open Content.
+    Download frame content from Netflix Open Content to the current directory.
     """
-    typer.echo("Download content.")
-    typer.echo(f"Name: {name} {frame_start}-{frame_end}")
+    typer.echo(f"Downloading: {name} {frame_start}-{frame_end}")
     # Validate the frame range
     if frame_start < 1 or frame_end < 1:
         raise ValueError("Frame numbers must be positive integers.")
@@ -91,34 +94,37 @@ def download(
     count = frame_end - frame_start + 1
     if count < 1:
         raise ValueError("Count must be at least 1.")
-    # Print the count
-    typer.echo(f"Count: {count}")
-    # Implement the download logic here
+
     # Check if the AWS CLI is installed
     test_commands = ["aws", "--version"]
     try:
         subprocess.run(test_commands, check=True, capture_output=True)
     except subprocess.CalledProcessError:
-        raise OSError("AWS CLI is not installed.")
+        raise OSError(
+            "AWS CLI is not installed. Please install it to use this feature."
+        )
     # Obtain the asset configuration
-    asset = [d for d in CONFIG["assets"] if d["name"] == name][0]
-    if not asset:
-        raise ValueError(f"Asset {name} not found.")
+    assets = [d for d in CONFIG["assets"] if d["name"] == name]
+    if not assets:
+        raise ValueError(f"Asset {name} not found in config. Check asset name.")
+    asset = assets[0]
     # Check if the S3 URI is configured for the asset
     s3_uri = asset["s3_uri"]
 
     if not s3_uri:
-        raise ValueError(f"S3 URI is not configured for {name}.")
+        raise ValueError(f"S3 URI is not configured for {name}. Check the config file.")
     # Check if the S3 URI is valid
     if not s3_uri.startswith("s3://"):
         raise ValueError(f"Invalid S3 URI format {s3_uri}. Must start with 's3://'.")
     s3_basename = asset["s3_basename"]
     if not s3_basename:
-        raise ValueError(f"S3 basename is not configured for {name}.")
+        raise ValueError(
+            f"S3 basename is not configured for {name}. Check the config file."
+        )
     # Check if the S3 basename is valid
     if "%" not in s3_basename:
         raise ValueError(
-            f"Invalid S3 basename format {s3_basename}. Must contain a frame wildcard like %04d."
+            f"Invalid S3 basename format {s3_basename}. Must contain a frame wildcard like %04d. Check the config file."
         )
     # Generate the S3 path for each frame
     for frame in range(frame_start, frame_end + 1):
@@ -129,12 +135,26 @@ def download(
 
 
 @app.command()
-def list() -> None:
+def list(
+    only_frames: bool = typer.Option(True, help="Only list assets with frame content."),
+) -> None:
     """
     List available Netflix Open Content.
+
+    Some open content assets may not have frame content.
+
+    Args:
+        only_frames (bool): If True, only list assets with frames.
     """
-    typer.echo("Available content:")
+    message = "Available content"
+    if only_frames:
+        message += " with frames:"
+    else:
+        message += ":"
+    typer.echo(message)
     for asset in sorted(CONFIG["assets"], key=lambda x: x["name"]):
+        if only_frames and not asset.get("s3_uri"):
+            continue
         typer.echo(f"- {asset['name']}: {asset['description']}")
 
 
