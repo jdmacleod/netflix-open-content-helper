@@ -1,37 +1,33 @@
 # Netflix Open Content Helper
 
-A comprehensive template for Python projects following modern development practices. This template includes a working example package (a simple calculator) to demonstrate project structure, testing patterns, and development workflows.
+A command-line utility to assist with downloading test files from [Netflix Open Content](https://opencontent.netflix.com).
 
-## Features
+## Quickstart
 
-- **Modern Project Structure**
-  - `src` layout for proper packaging
-  - Clear separation of package code, tests, and documentation
-  - Example scripts directory for utilities and tools
+Download the first frame of [Sparks](https://opencontent.netflix.com/#h.d0oh6u8prqhe) to the current directory.
 
-- **Development Tools**
-  - Type checking with mypy
-  - Code formatting with black
-  - Import sorting with isort
-  - Linting with ruff
-  - Security checking with bandit and safety
-  - Pre-commit hooks for automated checks
+```bash
+noc download --name sparks --frame-start 1 --frame-end 1
+Downloading: sparks 1-1
+download: s3://download.opencontent.netflix.com/sparks/aces_image_sequence_59_94_fps/SPARKS_ACES_00001.exr to ./SPARKS_ACES_00001.exr
+```
 
-- **Testing Framework**
-  - pytest configuration
-  - Example tests with fixtures
-  - Coverage reporting setup
+List the available Open Content Assets with frame content.
 
-- **Documentation**
-  - Technical documentation structure
-  - API documentation examples
-  - Clean README template
+```bash
+noc list
+Available content with frames:
+- chimera: Live action footage, 4K. Download configured for the 23.98fps frame rate version. TIFF files.
+- cosmos_laundromat: Animated short film done in Blender, 2K 24p. EXR files.
+- meridian: Live action noir UHD short, 59.94fps. Mastered in Dolby Vision HDR. TIFF files.
+- sparks: Live action 4K HDR test short, 59.94fps, finished at 4000 nits. ACES EXR files.
+```
 
-## Using This Template
+Open a new web browser window to the [Netflix Open Content URL](https://opencontent.netflix.com).
 
-1. Create a new repository using this template
-2. Clone your new repository
-3. Make the following changes to customize for your project:
+```bash
+noc browse
+```
 
 ### Initial Setup
 
@@ -47,132 +43,20 @@ uv pip install -e ".[dev]"
 pre-commit install
 ```
 
-### Required Changes
-
-1. Update `pyproject.toml`:
-   - Change `name` to your project name
-   - Update `description` and `authors`
-   - Modify `packages` to point to your package name
-   - Adjust dependencies as needed
-
-2. Rename/modify source code:
-   - Remove or replace the calculator example in `src/calculator/`
-   - Create your own package structure under `src/`
-
-3. Update documentation:
-   - Modify this README.md for your project
-   - Update or remove example documentation in `docs/`
-   - Add your own documentation
-
-4. Update tests:
-   - Remove example calculator tests
-   - Create your own tests in `tests/`
-   - Update `conftest.py` with your fixtures
-
-5. Update scripts:
-   - Remove `example_calculation.py`
-   - Add your own utility scripts as needed
-
-6. Choose your license
-   - This template is provided as MIT
-   - You should choose and update the [LICENSE](.LICENSE) for your needs
-   - Update `license` in `pyproject.toml` to match
-
-### Example Code
-
-The template includes a simple calculator package that demonstrates:
-
-- Type hints and Pydantic models
-- Custom exceptions
-- History tracking
-- Unit testing
-- Pytest fixtures
-- Documentation standards
-
-You can run the example:
-
-```bash
-# Run tests
-pytest
-
-# Try the example script
-python scripts/example_calculation.py
-```
-
-Review the example code to understand the conventions, then remove or replace it with your own package.
-
-## Template Features in Detail
-
-### Source Layout
-
-```bash
-project-name/
-├── src/               # Main package directory
-│   └── your_package/  # Your source code goes here
-├── tests/             # Test directory
-├── docs/              # Documentation
-├── scripts/           # Utility scripts
-└── notebooks/         # Jupyter notebooks (if needed)
-```
-
-### Quality Tools
-
-- **black**: Code formatting
-  - Line length: 88 characters
-  - Configured in pyproject.toml
-
-- **mypy**: Type checking
-  - Strict type checking enabled
-  - Pydantic plugin configured
-
-- **isort**: Import sorting
-  - Compatible with black
-  - Structured import sections
-
-- **ruff**: Fast linting
-  - Configured to work with black
-  - Common Python linting rules
-
-- **pre-commit**: Automated checks
-  - Runs before each commit
-  - Ensures code quality
-
-### Testing
-
-- **pytest**: Testing framework
-  - Example fixtures in conftest.py
-  - Coverage reporting configured
-  - Clear test organization
-
-### Environment Management
-
-- `.env.template` for configuration
-- Virtual environment setup
-- Dependency management in pyproject.toml
-
-## Development Workflow
-
-1. Create feature branch
-2. Make changes
-3. Run tests: `pytest`
-4. Run pre-commit: `pre-commit run --all-files`
-5. Commit and push
-6. Create pull request
-
 ## Contributing
 
-Contributions to improve this template are welcome! Please submit issues and pull requests on GitHub.
+Contributions to improve this utility are welcome! Please submit issues and pull requests on GitHub.
 
 ## License
 
-This template is MIT licensed. See the [LICENSE](LICENSE) file for details.
+This code is MIT licensed. See the [LICENSE](LICENSE) file for details.
 
 ## Credits
 
-Created and maintained by [Your Name/Organization]. This template is designed to provide a solid foundation for Python projects while demonstrating best practices through working examples.
+Created and maintained by [Jason MacLeod](https://github.com/jdmacleod).
 
 ## Reference
 
-See the [REFERENCE.md](./REFERENCE.md) for details on how this project is set up.
+See the [REFERENCE.md](./REFERENCE.md) for details on how this project is set up, including developer details.
 
-Using [Marc Goodner's Python Template](https://github.com/robotdad/python-template)
+Made using [Marc Goodner's Python Template](https://github.com/robotdad/python-template)
