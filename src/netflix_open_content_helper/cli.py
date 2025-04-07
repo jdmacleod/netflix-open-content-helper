@@ -25,6 +25,7 @@ def download_from_s3(
         "aws",
         "s3",
         "cp",
+        "--quiet",
         "--no-sign-request",
         f"{s3_uri}/{s3_path}",
         dest_path,
