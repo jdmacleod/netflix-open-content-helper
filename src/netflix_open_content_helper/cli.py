@@ -2,11 +2,10 @@ import os
 import subprocess
 import webbrowser
 from pathlib import Path
-from typing import Optional
+from typing import Annotated, Optional
 
 import typer
 from rich.progress import track
-from typing_extensions import Annotated
 
 from netflix_open_content_helper import CONFIG, __version__
 
@@ -148,10 +147,10 @@ def download(
     test_commands = ["aws", "--version"]
     try:
         subprocess.run(test_commands, check=True, capture_output=True)
-    except subprocess.CalledProcessError:
+    except subprocess.CalledProcessError as exc:
         raise OSError(
             "AWS CLI is not installed. Please install it to use this feature."
-        )
+        ) from exc
     # Obtain the asset configuration, conform to lower-case name
     assets = [d for d in CONFIG["assets"] if d["name"] == name.lower()]
     if not assets:
@@ -181,11 +180,10 @@ def download(
             f"Invalid S3 basename format '{s3_basename}'. Must contain a frame wildcard like %04d. Check the config file."
         )
     # check if the rename syntax is valid.
-    if rename:
-        if "%" not in rename:
-            raise ValueError(
-                f"Invalid rename format '{rename}'. Must contain a frame wildcard like %04d."
-            )
+    if rename and "%" not in rename:
+        raise ValueError(
+            f"Invalid rename format '{rename}'. Must contain a frame wildcard like %04d."
+        )
     # Generate the S3 path for each frame
     if renumber:
         if not rename:
@@ -196,19 +194,13 @@ def download(
         s3_path = s3_basename % value
         frame_path = Path(s3_path)
         if rename:
-            if renumber:
-                rename_value = value + renumber_offset
-            else:
-                rename_value = value
+            rename_value = value + renumber_offset if renumber else value
             rename_path = rename % rename_value
             frame_path = Path(rename_path)
         # check if the frame exists on disk already
-        if Path(frame_path.name).is_file():
-            if not force:
-                print(
-                    f"file {frame_path.name} exists, skipping. Use --force to overwrite."
-                )
-                continue
+        if Path(frame_path.name).is_file() and not force:
+            print(f"file {frame_path.name} exists, skipping. Use --force to overwrite.")
+            continue
 
         # Download the content from S3
         download_from_s3(s3_uri, s3_path, dry_run=dry_run)
