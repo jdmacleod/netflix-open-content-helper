@@ -1,4 +1,3 @@
-import os
 import subprocess
 import webbrowser
 from pathlib import Path
@@ -177,12 +176,12 @@ def download(
     # Check if the S3 basename is valid
     if "%" not in s3_basename:
         raise ValueError(
-            f"Invalid S3 basename format '{s3_basename}'. Must contain a frame wildcard like %04d. Check the config file."
+            f"Invalid S3 basename format '{s3_basename}'. Must contain a frame substitution wildcard like %04d. Check the config file."
         )
     # check if the rename syntax is valid.
     if rename and "%" not in rename:
         raise ValueError(
-            f"Invalid rename format '{rename}'. Must contain a frame wildcard like %04d."
+            f"Invalid rename format '{rename}'. Must contain a frame substitution wildcard like %04d."
         )
     # Generate the S3 path for each frame
     if renumber:
@@ -202,15 +201,9 @@ def download(
             print(f"file {frame_path.name} exists, skipping. Use --force to overwrite.")
             continue
 
-        # Download the content from S3
-        download_from_s3(s3_uri, s3_path, dry_run=dry_run)
-        # rename / renumber frames
-        if rename:
-            if dry_run:
-                print(f"dry-run: rename {Path(s3_path).name} -> {rename_path}")
-            else:
-                print(f"rename: {Path(s3_path).name} -> {rename_path}")
-                os.rename(Path(s3_path).name, rename_path)
+        # Download the content from S3, renaming if requested
+        dest_path = rename_path if rename else "."
+        download_from_s3(s3_uri, s3_path, dest_path=dest_path, dry_run=dry_run)
 
 
 @app.command("list")
