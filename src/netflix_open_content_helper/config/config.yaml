@@ -2,7 +2,7 @@
 netflix_open_content_url: "https://opencontent.netflix.com/"
 
 assets:
-  - name: "sol_levante"
+  - name: "sollevante"
     fullname: "Sol Levante (2020)"
     description: "4K HDR Atmos anime short."
     url: "https://www.netflix.com/title/81010014"
@@ -12,7 +12,7 @@ assets:
     url: "https://www.netflix.com/title/81010015"
     s3_uri: "s3://download.opencontent.netflix.com/sparks/aces_image_sequence_59_94_fps"
     s3_basename: "SPARKS_ACES_%05d.exr"
-  - name: "cosmos_laundromat"
+  - name: "cosmoslaundromat"
     fullname: "Cosmos Laundromat (2016)"
     description: "Animated short film done in Blender, 2K 24p. EXR files."
     url: "https://www.netflix.com/title/81010016"
@@ -34,7 +34,7 @@ assets:
     url: "https://www.netflix.com/title/81010019"
     s3_uri: "s3://download.opencontent.netflix.com/Chimera/tif_DCI4K2398p"
     s3_basename: "Chimera_DCI4k2398p_HDR_P3PQ_%05d.tif"
-  - name: "el_fuente"
+  - name: "elfuente"
     fullname: "El Fuente"
     description: "4K live action footage."
     url: "https://www.netflix.com/title/81010020"

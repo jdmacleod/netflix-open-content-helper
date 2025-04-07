@@ -1,12 +1,19 @@
+import os
 import subprocess
 import webbrowser
+from pathlib import Path
+from typing import Optional
 
 import typer
+from rich.progress import track
+from typing_extensions import Annotated
 
 from netflix_open_content_helper import CONFIG, __version__
 
 
-def download_from_s3(s3_uri: str, s3_path: str, dest_path: str = ".") -> None:
+def download_from_s3(
+    s3_uri: str, s3_path: str, dest_path: str = ".", dry_run: bool = False
+) -> None:
     """
     Download a file from S3.
 
@@ -14,6 +21,7 @@ def download_from_s3(s3_uri: str, s3_path: str, dest_path: str = ".") -> None:
         s3_uri (str): The base S3 URI.
         s3_path (str): The specific path to the file in S3.
         dest_path (str): The destination path for the downloaded file.
+        dry_run (bool): If true, show what would be done, but do not do it.
     """
     commands = [
         "aws",
@@ -23,7 +31,10 @@ def download_from_s3(s3_uri: str, s3_path: str, dest_path: str = ".") -> None:
         f"{s3_uri}/{s3_path}",
         dest_path,
     ]
-    subprocess.run(commands, check=True)
+    if dry_run:
+        print(f"dry-run: {' '.join(commands)}")
+    else:
+        subprocess.run(commands, check=True)
 
 
 def version_callback(value: bool) -> None:
@@ -53,7 +64,7 @@ def common(
 @app.command()
 def browse() -> None:
     """
-    Open a web browser for Netflix Open Content.
+    Open a web browser to the Netflix Open Content URL.
     """
     NETFLIX_OPEN_CONTENT_URL = CONFIG["netflix_open_content_url"]
     # Check if the URL is configured
@@ -77,23 +88,61 @@ def browse() -> None:
 
 @app.command()
 def download(
-    name: str = typer.Option(..., help="The asset name."),
-    frame_start: int = typer.Option(1, help="The start frame for the download."),
-    frame_end: int = typer.Option(2, help="The end frame for the download."),
+    name: Annotated[
+        str, typer.Argument(help="The name of the project to download from.")
+    ],
+    frame_start: Annotated[
+        int,
+        typer.Option("--frame-start", "-fs", help="The start frame for the download."),
+    ] = 1,
+    frame_end: Annotated[
+        int, typer.Option("--frame-end", "-fe", help="The end frame for the download.")
+    ] = 1,
+    force: Annotated[
+        bool,
+        typer.Option(
+            "--force",
+            "-f",
+            help="Force download/overwrite of files that already exist.",
+        ),
+    ] = False,
+    dry_run: Annotated[
+        bool,
+        typer.Option(
+            "--dry-run",
+            "-n",
+            help="Show what would be done, but do not do it.",
+        ),
+    ] = False,
+    rename: Annotated[
+        Optional[str],
+        typer.Option(help="A new name for the downloaded frames. Ex. name.%04d.ext."),
+    ] = "",
+    renumber: Annotated[
+        Optional[int],
+        typer.Option(
+            help="A new start frame for the downloaded frames (with rename). Ex. 1001."
+        ),
+    ] = None,
 ) -> None:
-    """
-    Download frame content from Netflix Open Content to the current directory.
-    """
-    typer.echo(f"Downloading: {name} {frame_start}-{frame_end}")
+    """Download frames from Netflix Open Content project NAME to the current directory."""
+
+    typer.echo(f"Downloading: {name} frames {frame_start}-{frame_end}")
     # Validate the frame range
     if frame_start < 1 or frame_end < 1:
-        raise ValueError("Frame numbers must be positive integers.")
+        raise ValueError(
+            f"Frame numbers ({frame_start}, {frame_end}) must be positive integers."
+        )
     if frame_start > frame_end:
-        raise ValueError("Start frame must be less than or equal to end frame.")
+        raise ValueError(
+            f"Start frame ({frame_start}) must be less than or equal to end frame ({frame_end})."
+        )
     # Validate the count
     count = frame_end - frame_start + 1
     if count < 1:
-        raise ValueError("Count must be at least 1.")
+        raise ValueError(
+            f"Count of frames ({frame_start}-{frame_end}) must be at least 1."
+        )
 
     # Check if the AWS CLI is installed
     test_commands = ["aws", "--version"]
@@ -103,39 +152,77 @@ def download(
         raise OSError(
             "AWS CLI is not installed. Please install it to use this feature."
         )
-    # Obtain the asset configuration
-    assets = [d for d in CONFIG["assets"] if d["name"] == name]
+    # Obtain the asset configuration, conform to lower-case name
+    assets = [d for d in CONFIG["assets"] if d["name"] == name.lower()]
     if not assets:
-        raise ValueError(f"Asset {name} not found in config. Check asset name.")
+        print(f"Asset {name} not found in config.")
+        list_assets()
+        raise ValueError(f"Asset '{name}' not found in config. Check asset name.")
+
     asset = assets[0]
     # Check if the S3 URI is configured for the asset
     s3_uri = asset["s3_uri"]
 
     if not s3_uri:
-        raise ValueError(f"S3 URI is not configured for {name}. Check the config file.")
+        raise ValueError(
+            f"S3 URI is not configured for '{name}'. Check the config file."
+        )
     # Check if the S3 URI is valid
     if not s3_uri.startswith("s3://"):
         raise ValueError(f"Invalid S3 URI format {s3_uri}. Must start with 's3://'.")
     s3_basename = asset["s3_basename"]
     if not s3_basename:
         raise ValueError(
-            f"S3 basename is not configured for {name}. Check the config file."
+            f"S3 basename is not configured for '{name}'. Check the config file."
         )
     # Check if the S3 basename is valid
     if "%" not in s3_basename:
         raise ValueError(
-            f"Invalid S3 basename format {s3_basename}. Must contain a frame wildcard like %04d. Check the config file."
+            f"Invalid S3 basename format '{s3_basename}'. Must contain a frame wildcard like %04d. Check the config file."
         )
+    # check if the rename syntax is valid.
+    if rename:
+        if "%" not in rename:
+            raise ValueError(
+                f"Invalid rename format '{rename}'. Must contain a frame wildcard like %04d."
+            )
     # Generate the S3 path for each frame
-    for frame in range(frame_start, frame_end + 1):
+    if renumber:
+        if not rename:
+            raise ValueError("Option --renumber requires --rename.")
+        renumber_offset = renumber - frame_start
+    for value in track(range(frame_start, frame_end + 1), description="Downloading..."):
         # Generate the S3 path
-        s3_path = s3_basename % frame
+        s3_path = s3_basename % value
+        frame_path = Path(s3_path)
+        if rename:
+            if renumber:
+                rename_value = value + renumber_offset
+            else:
+                rename_value = value
+            rename_path = rename % rename_value
+            frame_path = Path(rename_path)
+        # check if the frame exists on disk already
+        if Path(frame_path.name).is_file():
+            if not force:
+                print(
+                    f"file {frame_path.name} exists, skipping. Use --force to overwrite."
+                )
+                continue
+
         # Download the content from S3
-        download_from_s3(s3_uri, s3_path)
+        download_from_s3(s3_uri, s3_path, dry_run=dry_run)
+        # rename / renumber frames
+        if rename:
+            if dry_run:
+                print(f"dry-run: rename {Path(s3_path).name} -> {rename_path}")
+            else:
+                print(f"rename: {Path(s3_path).name} -> {rename_path}")
+                os.rename(Path(s3_path).name, rename_path)
 
 
-@app.command()
-def list(
+@app.command("list")
+def list_assets(
     only_frames: bool = typer.Option(True, help="Only list assets with frame content."),
 ) -> None:
     """
@@ -155,7 +242,7 @@ def list(
     for asset in sorted(CONFIG["assets"], key=lambda x: x["name"]):
         if only_frames and not asset.get("s3_uri"):
             continue
-        typer.echo(f"- {asset['name']}: {asset['description']}")
+        typer.echo(f"- {asset['name']:<20}: {asset['description']}")
 
 
 if __name__ == "__main__":
