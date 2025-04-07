@@ -13,7 +13,7 @@ def download_from_s3(
     s3_uri: str, s3_path: str, dest_path: str = ".", dry_run: bool = False
 ) -> None:
     """
-    Download a file from S3.
+    Download a file from AWS S3.
 
     Args:
         s3_uri (str): The base S3 URI.
@@ -136,12 +136,6 @@ def download(
         raise ValueError(
             f"Start frame ({frame_start}) must be less than or equal to end frame ({frame_end})."
         )
-    # Validate the count
-    count = frame_end - frame_start + 1
-    if count < 1:
-        raise ValueError(
-            f"Count of frames ({frame_start}-{frame_end}) must be at least 1."
-        )
 
     # Check if the AWS CLI is installed
     test_commands = ["aws", "--version"]
@@ -151,6 +145,7 @@ def download(
         raise OSError(
             "AWS CLI is not installed. Please install it to use this feature."
         ) from exc
+
     # Obtain the asset configuration, conform to lower-case name
     assets = [d for d in CONFIG["assets"] if d["name"] == name.lower()]
     if not assets:
