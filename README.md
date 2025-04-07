@@ -2,6 +2,10 @@
 
 A command-line utility to assist with downloading test files from [Netflix Open Content](https://opencontent.netflix.com).
 
+## Prerequisites
+
+You need the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) installed and available in `$PATH`. No AWS account is needed however, as we use `-no-sign-request` when downloading files.
+
 ## Quickstart
 
 Download the first frame of [Sparks](https://opencontent.netflix.com/#h.d0oh6u8prqhe) to the current directory.

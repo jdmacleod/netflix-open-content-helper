@@ -94,7 +94,19 @@ You can run the example:
 ```bash
 # Run tests
 pytest
+```
 
+```bash
+# Report test coverage
+pytest --cov=netflix_open_content_helper
+```
+
+```bash
+# Generate test coverage report as HTML
+pytest --cov=netflix_open_content_helper --cov-report=html
+```
+
+```bash
 # Try the example script
 python scripts/example_calculation.py
 ```
