@@ -56,7 +56,7 @@ def common(
         callback=version_callback,
     ),
 ) -> None:
-    """A helper suite for Netflix Open Content media."""
+    """A utility for interacting with Netflix Open Content media."""
     pass
 
 
