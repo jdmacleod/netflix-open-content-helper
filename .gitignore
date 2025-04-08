@@ -51,3 +51,6 @@ logs/
 
 # GitHub pages with Ruby and Jekyll
 Gemfile.lock
+
+# JUnit and coverage reports
+docs/reports
