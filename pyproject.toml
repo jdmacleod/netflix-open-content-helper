@@ -6,6 +6,7 @@ authors = [
     {name = "Jason MacLeod", email = "jason.d.macleod@gmail.com"},
 ]
 dependencies = [
+    "ruamel-yaml>0.18.0",
     "typer>=0.7.0",
 ]
 requires-python = ">=3.9"
