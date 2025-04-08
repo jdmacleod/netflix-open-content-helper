@@ -7,6 +7,7 @@ A command-line utility for downloading test frames from [Netflix Open Content](h
 
 [![Tests Status](./tests/reports/junit/tests-badge.svg?dummy=8484744)](./tests/reports/junit/report.html)
 [![Coverage Status](./tests/reports/coverage/coverage-badge.svg?dummy=8484744)](./tests/reports/coverage/index.html)
+[![codecov](https://codecov.io/gh/jdmacleod/netflix-open-content-helper/branch/main/graph/badge.svg)](https://codecov.io/gh/jdmacleod/netflix-open-content-helper)
 
 ## Prerequisites
 
