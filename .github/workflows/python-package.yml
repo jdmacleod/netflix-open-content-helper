@@ -27,7 +27,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install flake8 pytest
+        python -m pip install flake8 pytest pytest-html
         if [ -f pyproject.toml ]; then pip install .; fi
     - name: Lint with flake8
       run: |
@@ -37,4 +37,12 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest
+        pytest --junitxml=tests/reports/junit/junit.xml --html=tests/reports/junit/report.html
+    - name: Generate badges with genbadge
+      run: |
+        python -m pip install genbadge[all]
+        genbadge tests --input-file ./tests/reports/junit/junit.xml --output-file ./tests/reports/junit/tests-badge.svg
+        coverage report
+        coverage xml -o ./tests/reports/coverage/coverage.xml
+        coverage html -d ./tests/reports/coverage
+        genbadge coverage --input-file ./tests/reports/coverage/coverage.xml --output-file ./tests/reports/coverage/coverage-badge.svg
