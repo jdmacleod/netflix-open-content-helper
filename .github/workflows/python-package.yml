@@ -46,10 +46,11 @@ jobs:
         coverage xml -o ./tests/reports/coverage/coverage.xml
         coverage html -d ./tests/reports/coverage
         genbadge coverage --input-file ./tests/reports/coverage/coverage.xml --output-file ./tests/reports/coverage/coverage-badge.svg
-    - name: Upload static report files as artifact
+    - name: Upload static report files as artifact, only for one Python version to avoid collision
       id: report-deployment
       uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
       with:
+        python-version: 3.9
         path: ./tests/reports/
 
   # Deployment job for reports
