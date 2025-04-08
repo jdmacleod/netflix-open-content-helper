@@ -1,6 +1,6 @@
 [project]
 name = "netflix_open_content_helper"
-version = "0.1.1"
+version = "0.1.2"
 description = "CLI for working with Netflix Open Content resources."
 authors = [
     {name = "Jason MacLeod", email = "jason.d.macleod@gmail.com"},
@@ -11,7 +11,7 @@ dependencies = [
 ]
 requires-python = ">=3.9"
 readme = "README.md"
-license = {text = "MIT"}
+license = "MIT"
 
 classifiers = [
   # How mature is this project? Common values are
@@ -27,8 +27,6 @@ classifiers = [
 
   # Indicate who your project is intended for
   "Intended Audience :: End Users/Desktop",
-
-  "License :: OSI Approved :: MIT License",
 
   # Specify the Python versions you support here.
   "Programming Language :: Python :: 3",
