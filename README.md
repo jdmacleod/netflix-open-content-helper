@@ -1,6 +1,12 @@
 # Netflix Open Content Helper
 
-A command-line utility to assist with downloading test files from [Netflix Open Content](https://opencontent.netflix.com).
+A command-line utility for downloading test frames from [Netflix Open Content](https://opencontent.netflix.com).
+
+![GitHub branch check runs](https://img.shields.io/github/check-runs/jdmacleod/netflix-open-content-helper/main)
+![GitHub License](https://img.shields.io/github/license/jdmacleod/netflix-open-content-helper)
+
+[![Tests Status](./tests/reports/junit/tests-badge.svg?dummy=8484744)](./tests/reports/junit/report.html)
+[![Coverage Status](./tests/reports/coverage/coverage-badge.svg?dummy=8484744)](./tests/reports/coverage/index.html)
 
 ## Prerequisites
 
@@ -13,7 +19,6 @@ Download the first frame of [Sparks](https://opencontent.netflix.com/#h.d0oh6u8p
 ```bash
 $ noc download sparks
 Downloading: sparks frames 1-1
-download: s3://download.opencontent.netflix.com/sparks/aces_image_sequence_59_94_fps/SPARKS_ACES_00001.exr to ./SPARKS_ACES_00001.exr
 Downloading... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:11
 ```
 
