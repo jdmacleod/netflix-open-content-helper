@@ -40,7 +40,7 @@ jobs:
         pytest --junitxml=tests/reports/junit/junit.xml --html=tests/reports/junit/report.html
     - name: Generate badges with genbadge
       run: |
-        python -m pip install genbadge[all]
+        python -m pip install coverage genbadge[all]
         genbadge tests --input-file ./tests/reports/junit/junit.xml --output-file ./tests/reports/junit/tests-badge.svg
         coverage report
         coverage xml -o ./tests/reports/coverage/coverage.xml
