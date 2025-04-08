@@ -46,3 +46,20 @@ jobs:
         coverage xml -o ./tests/reports/coverage/coverage.xml
         coverage html -d ./tests/reports/coverage
         genbadge coverage --input-file ./tests/reports/coverage/coverage.xml --output-file ./tests/reports/coverage/coverage-badge.svg
+    - name: Upload static report files as artifact
+      id: report-deployment
+      uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+      with:
+        path: ./tests/reports/
+
+  # Deployment job for reports
+  deploy:
+    environment:
+      name: github-pages-reports
+      url: ${{ steps.report-deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy Reports to GitHub Pages
+        id: report-deployment
+        uses: actions/deploy-pages@v4
