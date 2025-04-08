@@ -48,3 +48,6 @@ logs/
 # Build
 *.manifest
 *.spec
+
+# GitHub pages with Ruby and Jekyll
+Gemfile.lock
