@@ -29,7 +29,7 @@ $ pipx install netflix-open-content-helper
 
 This will provide the command-line utility `noc`.
 
-### Using `noc`
+### Using `noc` with Netflix Open Content
 
 Download the first frame of [Sparks](https://opencontent.netflix.com/#h.d0oh6u8prqhe) to the current directory.
 
@@ -39,7 +39,7 @@ Downloading: sparks frames 1-1
 Downloading... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:11
 ```
 
-List the available Open Content Assets with frame content.
+List the available Netflix Open Content Assets with frame content.
 
 ```bash
 $ noc list
@@ -57,14 +57,18 @@ $ noc browse
 ... (web browser opens)
 ```
 
-### Initial Setup
+## Developer Setup
+
+Clone this repository (or fork on GitHub).
+
+In the local repository directory, set up for Python development. The steps below show `uv` - but Python `venv` is also fine.
 
 ```bash
 # Create and activate virtual environment
 uv venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
-# Install development dependencies
+# Install development dependencies with the project set as editable
 uv pip install -e ".[dev]"
 
 # Install pre-commit hooks
@@ -73,7 +77,7 @@ pre-commit install
 
 ## Contributing
 
-Contributions to improve this utility are welcome! Please submit issues and pull requests on GitHub.
+Contributions to improve this utility are welcome! Please submit [issues](https://github.com/jdmacleod/netflix-open-content-helper/issues) and [pull requests](https://github.com/jdmacleod/netflix-open-content-helper/pulls) on GitHub.
 
 ## License
 
