@@ -91,6 +91,6 @@ Created and maintained by [Jason MacLeod](https://github.com/jdmacleod).
 
 ## Reference
 
-See the [REFERENCE.md](./REFERENCE.md) for details on how this project is set up, including developer details.
+See [REFERENCE.md](./REFERENCE.md) for details on how this project is set up, including more developer details.
 
 Made using [Marc Goodner's Python Template](https://github.com/robotdad/python-template)
