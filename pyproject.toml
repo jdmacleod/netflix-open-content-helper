@@ -1,6 +1,6 @@
 [project]
 name = "netflix_open_content_helper"
-version = "0.1.3"
+version = "0.1.4"
 description = "CLI for working with Netflix Open Content resources."
 authors = [
     {name = "Jason MacLeod", email = "jason.d.macleod@gmail.com"},
