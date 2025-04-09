@@ -87,6 +87,9 @@ jobs:
       run: |
         echo "checking for release using name $GITHUB_REF_NAME"
         gh release view "$GITHUB_REF_NAME"
+        echo "checking return code of gh release view"
+        echo $(gh release view $GITHUB_REF_NAME &> /dev/null)
+        echo "checked return code of gh release view"
         echo "RELEASE_EXISTS=$(gh release view $GITHUB_REF_NAME &> /dev/null)" >> "$GITHUB_ENV"
         echo "set env var RELEASE_EXISTS"
         echo "see gh release view result below"
