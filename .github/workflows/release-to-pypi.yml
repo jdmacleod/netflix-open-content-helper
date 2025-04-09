@@ -87,13 +87,13 @@ jobs:
       run: |
         echo "checking for release using name $GITHUB_REF_NAME"
         gh release view "$GITHUB_REF_NAME"
-        echo "checking return code of gh release view"
-        echo $(gh release view $GITHUB_REF_NAME &> /dev/null)
-        echo "checked return code of gh release view"
-        echo "RELEASE_EXISTS=$(gh release view $GITHUB_REF_NAME &> /dev/null)" >> "$GITHUB_ENV"
+        echo "checking return code of gh release view for $GITHUB_REF_NAME-> $?"
+        gh release view no-release
+        echo "checking return code of gh release view for 'no-release'-> $?"
+        gh release view "$GITHUB_REF_NAME"
+        echo "RELEASE_EXISTS=$?" >> "$GITHUB_ENV"
+        echo "checked return code of gh release view again"
         echo "set env var RELEASE_EXISTS"
-        echo "see gh release view result below"
-        echo $(gh release view $GITHUB_REF_NAME &> /dev/null)
     - name: Delete the GitHub Release and tag if it exists
       env:
         GITHUB_TOKEN: ${{ github.token }}
