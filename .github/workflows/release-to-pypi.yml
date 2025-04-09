@@ -86,8 +86,11 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       run: |
         echo "checking for release using name $GITHUB_REF_NAME"
-        gh release view $GITHUB_REF_NAME
-        echo "RELEASE_EXISTS=$(gh release view $GITHUB_REF_NAME)" >> "$GITHUB_ENV"
+        gh release view "$GITHUB_REF_NAME"
+        echo "RELEASE_EXISTS=$(gh release view $GITHUB_REF_NAME &> /dev/null)" >> "$GITHUB_ENV"
+        echo "set env var RELEASE_EXISTS"
+        echo "see gh release view result below"
+        echo $(gh release view $GITHUB_REF_NAME &> /dev/null)
     - name: Delete the GitHub Release and tag if it exists
       env:
         GITHUB_TOKEN: ${{ github.token }}
