@@ -66,6 +66,10 @@ jobs:
       id-token: write  # IMPORTANT: mandatory for sigstore
 
     steps:
+    - name: Checkout Git repo to enable release existence check
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Download all the dists
       uses: actions/download-artifact@v4
       with:
