@@ -77,18 +77,25 @@ jobs:
         inputs: >-
           ./dist/*.tar.gz
           ./dist/*.whl
-    - name: Check if package version has a release already
+    - name: Check if package version has a release already, and set env var
       env:
         GITHUB_TOKEN: ${{ github.token }}
-      id: released
-      shell: bash
-      run: gh release view "$GITHUB_REF_NAME" &> /dev/null && echo "::set-output name=released::1" || echo "::set-output name=released::0"
-    - name: Delete the GitHub Release, if it exists already
-      if: steps.released.outputs.released == 1
+      run: |
+        echo "checking for release using name $GITHUB_REF_NAME"
+        gh release view $GITHUB_REF_NAME
+        echo "RELEASE_EXISTS=$(gh release view $GITHUB_REF_NAME)" >> "$GITHUB_ENV"
+    - name: Delete the GitHub Release and tag if it exists
       env:
         GITHUB_TOKEN: ${{ github.token }}
-      run: >-
-        gh release delete "$GITHUB_REF_NAME" --cleanup-tag --repo "$GITHUB_REPOSITORY" --yes 2>&1;
+      run: |
+        echo "checking env var RELEASE_EXISTS for name $GITHUB_REF_NAME"
+        echo "The value of RELEASE_EXISTS is $RELEASE_EXISTS"
+        echo "The value of GITHUB_REF_NAME is $GITHUB_REF_NAME"
+        echo "The value of GITHUB_REPOSITORY is $GITHUB_REPOSITORY"
+        if [[ "$RELEASE_EXISTS ]]; then
+            echo "Trying to delete release using $GITHUB_REF_NAME"
+            gh release delete "$GITHUB_REF_NAME" --cleanup-tag --repo "$GITHUB_REPOSITORY" --yes 2>&1;
+        fi
     - name: Create GitHub Release
       env:
         GITHUB_TOKEN: ${{ github.token }}
