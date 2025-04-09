@@ -61,19 +61,21 @@ $ noc browse
 
 Clone this repository (or fork on GitHub).
 
-In the local repository directory, set up for Python development. The steps below show `uv` - but Python `venv` is also fine.
+In the local repository directory, set up for Python development. The steps below show [Astral's uv](https://docs.astral.sh/uv/) in use - but using Python [venv](https://docs.python.org/3/library/venv.html) is also fine.
 
 ```bash
-# Create and activate virtual environment
+# Create and activate Python virtual environment
 uv venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
 # Install development dependencies with the project set as editable
 uv pip install -e ".[dev]"
 
-# Install pre-commit hooks
+# Install Git pre-commit hooks
 pre-commit install
 ```
+
+Create a feature branch and make changes. See [TESTS.md](./TESTS.md) for details on running this product's tests.
 
 ## Contributing
 
