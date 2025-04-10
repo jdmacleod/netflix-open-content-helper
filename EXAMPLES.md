@@ -26,6 +26,8 @@ List content with frames (default).
 noc list
 ```
 
+Output:
+
 ```bash
 Available content with frames:
 - chimera             : Live action footage, 4K. Download configured for the 23.98fps frame rate version. TIFF files.
@@ -39,6 +41,8 @@ List all content (some content does not have frames for download).
 ```bash
 noc list --no-only-frames
 ```
+
+Output:
 
 ```bash
 Available content:
@@ -74,7 +78,7 @@ Download frames 1-8 from [Sparks](https://opencontent.netflix.com/#h.d0oh6u8prqh
 noc download sparks -fs 4 -fe 8
 ```
 
-Frames that already exist on disk are skipped by default. Use `--force` to force an overwrite.
+Frames that already exist on disk are skipped by default. Use `--force` to force re-download and overwrite.
 
 Output:
 
