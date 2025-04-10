@@ -59,6 +59,8 @@ $ noc browse
 ... (web browser opens)
 ```
 
+See [EXAMPLES.md](./EXAMPLES.md) for more examples.
+
 ## Developer Setup
 
 Clone this repository (or fork on GitHub).
