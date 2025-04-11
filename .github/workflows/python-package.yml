@@ -67,9 +67,8 @@ jobs:
           pattern: reports_dir-*
 
   build_docs:
-    needs: build
+    needs: merge_reports
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -88,7 +87,6 @@ jobs:
   publish_docs:
     needs: build_docs
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     steps:
       - name: GitHub context to debug conditional steps
         env:
