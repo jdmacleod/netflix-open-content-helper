@@ -51,11 +51,20 @@ jobs:
         files: ./tests/reports/coverage/coverage.xml
     # Share ./docs/reports so that they can be deployed with docs in next job
     - name: Share reports with other jobs
-      if: runner.os == 'Linux'
       uses: actions/upload-artifact@v4.3.1
       with:
-        name: reports_dir
+        name: reports_dir-${{ matrix.python-version }}
         path: ./tests/reports
+
+  merge_reports:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Merge Artifacts
+        uses: actions/upload-artifact/merge@v4
+        with:
+          name: reports_dir
+          pattern: reports_dir-*
 
   build_docs:
     needs: build
