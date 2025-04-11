@@ -7,8 +7,8 @@ A command-line utility for downloading test frames from [Netflix Open Content](h
 [![Documentation](https://img.shields.io/badge/doc-latest-blue.svg)](https://jdmacleod.github.io/netflix-open-content-helper/) [![PyPI - Version](https://img.shields.io/pypi/v/netflix-open-content-helper)](https://pypi.org/project/netflix-open-content-helper/)
 
 [![GitHub License](https://img.shields.io/github/license/jdmacleod/netflix-open-content-helper)](https://github.com/jdmacleod/netflix-open-content-helper/blob/main/LICENSE)
-[![Tests Status](./tests/reports/junit/tests-badge.svg?dummy=8484744)](./tests/reports/junit/report.html)
-[![Coverage Status](./tests/reports/coverage/coverage-badge.svg?dummy=8484744)](./tests/reports/coverage/index.html)
+[![Tests Status](./reports/junit/tests-badge.svg?dummy=8484744)](./reports/junit/report.html)
+[![Coverage Status](./reports/coverage/coverage-badge.svg?dummy=8484744)](./reports/coverage/index.html)
 [![codecov](https://codecov.io/gh/jdmacleod/netflix-open-content-helper/branch/main/graph/badge.svg)](https://codecov.io/gh/jdmacleod/netflix-open-content-helper)
 
 ## Prerequisites
@@ -59,42 +59,18 @@ $ noc browse
 ... (web browser opens)
 ```
 
-See the [user documentation](https://jdmacleod.github.io/netflix-open-content-helper/) for more examples.
+## Examples
 
-## Developer Setup
+See [examples.md](./examples.md) for more examples.
 
-Clone this repository (or fork on GitHub).
+## Changes
 
-In the local repository directory, set up for Python development. The steps below show [Astral's uv](https://docs.astral.sh/uv/) in use - but using Python [venv](https://docs.python.org/3/library/venv.html) is also fine.
+See the product [Change Log](https://github.com/jdmacleod/netflix-open-content-helper/blob/main/CHANGELOG.md) on GitHub for a history of changes.
 
-```bash
-# Create and activate Python virtual environment
-uv venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+## Problems?
 
-# Install development dependencies with the project set as editable
-uv pip install -e ".[dev]"
+Please submit [issues](https://github.com/jdmacleod/netflix-open-content-helper/issues) on GitHub.
 
-# Install Git pre-commit hooks
-pre-commit install
-```
+## Want to contribute?
 
-Create a feature branch and make changes. See [TESTS.md](./TESTS.md) for details on running this product's tests.
-
-## Contributing
-
-Contributions to improve this utility are welcome! Please submit [issues](https://github.com/jdmacleod/netflix-open-content-helper/issues) and [pull requests](https://github.com/jdmacleod/netflix-open-content-helper/pulls) on GitHub.
-
-## License
-
-This code is MIT licensed. See the [LICENSE](LICENSE) file for details.
-
-## Credits
-
-Created and maintained by [Jason MacLeod](https://github.com/jdmacleod).
-
-## Reference
-
-See [REFERENCE.md](./REFERENCE.md) for details on how this project is set up, including more developer details.
-
-Made using [Marc Goodner's Python Template](https://github.com/robotdad/python-template)
+Details on the GitHub page: [https://github.com/jdmacleod/netflix-open-content-helper](https://github.com/jdmacleod/netflix-open-content-helper).
