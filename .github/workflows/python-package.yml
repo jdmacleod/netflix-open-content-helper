@@ -87,6 +87,10 @@ jobs:
   publish_docs:
     needs: build_docs
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
+      pages: write
     steps:
       - name: GitHub context to debug conditional steps
         env:
