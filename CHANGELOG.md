@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- User Docs generation with [MkDoc](https://www.mkdocs.org/), with [deployment](https://www.mkdocs.org/user-guide/deploying-your-docs/) via GitHub Action. Addresses [#1](https://github.com/smarie/python-genbadge/issues/1) and [#2](https://github.com/smarie/python-genbadge/issues/2).
+- User Docs generation with [MkDoc](https://www.mkdocs.org/), with [deployment](https://www.mkdocs.org/user-guide/deploying-your-docs/) via GitHub Action. Addresses [#1](https://github.com/jdmacleod/netflix-open-content-helper/issues/1) and [#2](https://github.com/jdmacleod/netflix-open-content-helper/issues/2).
 
 ## [0.1.13] - 2025-04-09
 
