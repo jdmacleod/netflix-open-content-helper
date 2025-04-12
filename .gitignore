@@ -49,6 +49,9 @@ logs/
 *.manifest
 *.spec
 
+# mkdocs documentation
+/site
+
 # GitHub pages with Ruby and Jekyll
 Gemfile.lock
 
