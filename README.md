@@ -7,9 +7,10 @@ A command-line utility for downloading test frames from [Netflix Open Content](h
 [![Documentation](https://img.shields.io/badge/doc-latest-blue.svg)](https://jdmacleod.github.io/netflix-open-content-helper/) [![PyPI - Version](https://img.shields.io/pypi/v/netflix-open-content-helper)](https://pypi.org/project/netflix-open-content-helper/)
 
 [![GitHub License](https://img.shields.io/github/license/jdmacleod/netflix-open-content-helper)](https://github.com/jdmacleod/netflix-open-content-helper/blob/main/LICENSE)
-[![Tests Status](./tests/reports/junit/tests-badge.svg?dummy=8484744)](./tests/reports/junit/report.html)
-[![Coverage Status](./tests/reports/coverage/coverage-badge.svg?dummy=8484744)](./tests/reports/coverage/index.html)
+[![Tests Status](https://jdmacleod.github.io/netflix-open-content-helper/reports/junit/tests-badge.svg)](https://jdmacleod.github.io/netflix-open-content-helper/reports/junit/report.html) [![Coverage Status](https://jdmacleod.github.io/netflix-open-content-helper/reports/coverage/coverage-badge.svg)](https://jdmacleod.github.io/netflix-open-content-helper/reports/coverage/index.html)
 [![codecov](https://codecov.io/gh/jdmacleod/netflix-open-content-helper/branch/main/graph/badge.svg)](https://codecov.io/gh/jdmacleod/netflix-open-content-helper)
+
+**This is the readme for developers.** The documentation for users is available here: [https://jdmacleod.github.io/netflix-open-content-helper/](https://jdmacleod.github.io/netflix-open-content-helper/)
 
 ## Prerequisites
 
