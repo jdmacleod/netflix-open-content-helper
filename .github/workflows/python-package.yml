@@ -87,6 +87,7 @@ jobs:
   publish_docs:
     needs: build_docs
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')  # only publish docs on tag pushes
     permissions:
       contents: write
       id-token: write  # IMPORTANT: mandatory for trusted publishing
