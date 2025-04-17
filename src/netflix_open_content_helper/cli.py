@@ -7,6 +7,7 @@ import typer
 from rich.progress import track
 
 from netflix_open_content_helper import CONFIG, __version__
+from netflix_open_content_helper.parser import parse_shotfile
 
 
 def download_from_s3(
@@ -184,7 +185,8 @@ def download(
         if not rename:
             raise ValueError("Option --renumber requires --rename.")
         renumber_offset = renumber - frame_start
-    for value in track(range(frame_start, frame_end + 1), description="Downloading..."):
+
+    for value in track(range(frame_start, frame_end + 1), "Downloading Frames..."):
         # Generate the S3 path
         s3_path = s3_basename % value
         frame_path = Path(s3_path)
@@ -202,6 +204,48 @@ def download(
         download_from_s3(s3_uri, s3_path, dest_path=dest_path, dry_run=dry_run)
 
 
+@app.command()
+def get(
+    shotfile: Annotated[
+        str,
+        typer.Argument(
+            help="A file containing a list of Shots to download. CSV, JSON, and YAML formats are supported."
+        ),
+    ],
+    force: Annotated[
+        bool,
+        typer.Option(
+            "--force",
+            "-f",
+            help="Force download/overwrite of files that already exist.",
+        ),
+    ] = False,
+    dry_run: Annotated[
+        bool,
+        typer.Option(
+            "--dry-run",
+            "-n",
+            help="Show what would be done, but do not do it.",
+        ),
+    ] = False,
+) -> None:
+    """Get a list of Shots from a file. CSV, JSON, and YAML formats are supported."""
+    shots = parse_shotfile(shotfile=shotfile)
+    # TODO: using the typer progress bar due to the rich progress bar not nesting easily with multiples
+    with typer.progressbar(shots, label="Getting Shots...", length=len(shots)) as bar:
+        for shot in shots:
+            download(
+                name=shot.project,
+                frame_end=shot.frame_end,
+                frame_start=shot.frame_start,
+                rename=shot.name,
+                renumber=shot.renumber,
+                dry_run=dry_run,
+                force=force,
+            )
+            bar.update(1)
+
+
 @app.command("list")
 def list_assets(
     only_frames: bool = typer.Option(True, help="Only list assets with frame content."),
@@ -211,8 +255,6 @@ def list_assets(
 
     Some open content assets may not have frame content.
 
-    Args:
-        only_frames (bool): If True, only list assets with frames.
     """
     message = "Available content"
     if only_frames:
