@@ -1,12 +1,13 @@
 [project]
 name = "netflix_open_content_helper"
-version = "0.1.14"
+version = "0.2.0"
 description = "CLI for working with Netflix Open Content resources."
 authors = [
     {name = "Jason MacLeod", email = "jason.d.macleod@gmail.com"},
 ]
 dependencies = [
     "PyYAML>6.0.0",
+    "pydantic>2.0.0",
     "typer>=0.7.0",
 ]
 requires-python = ">=3.9"
@@ -18,7 +19,7 @@ classifiers = [
   #   3 - Alpha
   #   4 - Beta
   #   5 - Production/Stable
-  "Development Status :: 3 - Alpha",
+  "Development Status :: 4 - Beta",
 
   "Environment :: Console",
 
