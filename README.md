@@ -60,6 +60,15 @@ $ noc browse
 ... (web browser opens)
 ```
 
+Get a list of Shots from a file (CSV, JSON, or YAML).
+
+```bash
+$ noc get shotlist.yaml
+Getting Shots...  [------------------------------------]    0%Downloading: sparks frames 5000-5001
+Downloading Frames... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:23
+Getting Shots...  [####################################]  100%
+```
+
 See the [user documentation](https://jdmacleod.github.io/netflix-open-content-helper/) for more examples.
 
 ## Developer Setup

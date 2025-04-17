@@ -9,6 +9,10 @@ Examples of using `noc` to interact with [Netflix Open Content](https://opencont
     - [Resume or Extend Download](#resume-or-extend-download)
     - [Download and Rename](#download-and-rename)
     - [Download, Rename, and Renumber](#download-rename-and-renumber)
+  - [Get](#get)
+    - [CSV Example](#csv-example)
+    - [JSON Example](#json-example)
+    - [YAML Example](#yaml-example)
 
 ## Browse
 
@@ -141,3 +145,53 @@ Version Fields:
 - task (comp)
 - vendorID (NFX)
 - version# (v001)
+
+## Get
+
+`get` accepts a list of Shots in a text file; CSV, JSON, and YAML formats are supported.
+
+```bash
+noc get one_shot.yaml
+```
+
+Output:
+
+```bash
+Getting Shots...  [------------------------------------]    0%Downloading: sparks frames 5000-5001
+Downloading Frames... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:23
+Getting Shots...  [####################################]  100%
+```
+
+Each of the examples below represents a single-Shot list, composed of frames 5000-5001 of [Sparks](https://opencontent.netflix.com/#h.d0oh6u8prqhe). In the example, the frames are renamed as "sparks.%04d.exr", and are renumbered starting with 1001. "name" and "renumber" are optional parameters.
+
+### CSV Example
+
+```csv
+project,name,frame_start,frame_end,renumber
+sparks,sparks.%04d.exr,5000,5001,1001
+```
+
+### JSON Example
+
+```json
+[
+ {
+  "project": "sparks",
+  "name": "sparks.%04d.exr",
+  "frame_start": 5000,
+  "frame_end": 5001,
+  "renumber": 1001
+ }
+]
+```
+
+### YAML Example
+
+```yaml
+---
+- project: sparks
+  name: sparks.%04d.exr
+  frame_start: 5000
+  frame_end: 5001
+  renumber: 1001
+```
