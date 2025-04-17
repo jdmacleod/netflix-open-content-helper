@@ -91,7 +91,8 @@
               
                 <h1 id="netflix-open-content-helper">Netflix Open Content Helper<a class="headerlink" href="#netflix-open-content-helper" title="Permanent link">&para;</a></h1>
 <p>A command-line utility for downloading test frames from <a href="https://opencontent.netflix.com">Netflix Open Content</a>.</p>
-<p><a href="(https://pypi.org/project/netflix-open-content-helper/)"><img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/netflix-open-content-helper" /></a> <a href="https://github.com/jdmacleod/netflix-open-content-helper/actions/workflows/python-package.yml"><img alt="Build Status" src="https://github.com/jdmacleod/netflix-open-content-helper/actions/workflows/python-package.yml/badge.svg" /></a>
+<p><a href="https://pypi.org/project/netflix-open-content-helper/"><img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/netflix-open-content-helper" /></a>
+ <a href="https://github.com/jdmacleod/netflix-open-content-helper/actions/workflows/python-package.yml"><img alt="Build Status" src="https://github.com/jdmacleod/netflix-open-content-helper/actions/workflows/python-package.yml/badge.svg" /></a>
 <a href="https://jdmacleod.github.io/netflix-open-content-helper/"><img alt="Documentation" src="https://img.shields.io/badge/doc-latest-blue.svg" /></a> <a href="https://pypi.org/project/netflix-open-content-helper/"><img alt="PyPI - Version" src="https://img.shields.io/pypi/v/netflix-open-content-helper" /></a></p>
 <p><a href="https://github.com/jdmacleod/netflix-open-content-helper/blob/main/LICENSE"><img alt="GitHub License" src="https://img.shields.io/github/license/jdmacleod/netflix-open-content-helper" /></a>
 <a href="reports/junit/report.html"><img alt="Tests Status" src="reports/junit/tests-badge.svg?dummy=8484744" /></a>
@@ -124,6 +125,12 @@ Available content with frames:
 <p>Open a new web browser window to the <a href="https://opencontent.netflix.com">Netflix Open Content URL</a>.</p>
 <pre><code class="language-bash">$ noc browse
 ... (web browser opens)
+</code></pre>
+<p>Get (download) a list of Shots from a file (CSV, JSON, or YAML).</p>
+<pre><code class="language-bash">$ noc get shotlist.yaml
+Getting Shots...  [------------------------------------]    0%Downloading: sparks frames 5000-5001
+Downloading Frames... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:23
+Getting Shots...  [####################################]  100%
 </code></pre>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <p>See <a href="examples/">examples.md</a> for more examples.</p>
@@ -185,5 +192,5 @@ Available content with frames:
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-04-17 15:54:29.794045+00:00
+Build Date UTC : 2025-04-17 17:06:14.569714+00:00
 -->
