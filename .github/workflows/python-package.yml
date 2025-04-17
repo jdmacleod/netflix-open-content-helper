@@ -109,7 +109,7 @@ jobs:
       - name: Install python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: 3.10
+          python-version: '3.10'
 
       # retrieve the reports generated previously. but move them to docs/
       - name: Retrieve reports
