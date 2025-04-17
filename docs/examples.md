@@ -148,7 +148,7 @@ Version Fields:
 
 ## Get
 
-`get` accepts a list of Shots in a text file; CSV, JSON, and YAML formats are supported.
+`get` accepts a list of Shots for download in a text file; CSV, JSON, and YAML formats are supported.
 
 ```bash
 noc get one_shot.yaml

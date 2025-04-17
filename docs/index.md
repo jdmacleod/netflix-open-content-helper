@@ -2,8 +2,8 @@
 
 A command-line utility for downloading test frames from [Netflix Open Content](https://opencontent.netflix.com).
 
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/netflix-open-content-helper)]((https://pypi.org/project/netflix-open-content-helper/)
-) [![Build Status](https://github.com/jdmacleod/netflix-open-content-helper/actions/workflows/python-package.yml/badge.svg)](https://github.com/jdmacleod/netflix-open-content-helper/actions/workflows/python-package.yml)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/netflix-open-content-helper)](https://pypi.org/project/netflix-open-content-helper/)
+ [![Build Status](https://github.com/jdmacleod/netflix-open-content-helper/actions/workflows/python-package.yml/badge.svg)](https://github.com/jdmacleod/netflix-open-content-helper/actions/workflows/python-package.yml)
 [![Documentation](https://img.shields.io/badge/doc-latest-blue.svg)](https://jdmacleod.github.io/netflix-open-content-helper/) [![PyPI - Version](https://img.shields.io/pypi/v/netflix-open-content-helper)](https://pypi.org/project/netflix-open-content-helper/)
 
 [![GitHub License](https://img.shields.io/github/license/jdmacleod/netflix-open-content-helper)](https://github.com/jdmacleod/netflix-open-content-helper/blob/main/LICENSE)
@@ -57,6 +57,15 @@ Open a new web browser window to the [Netflix Open Content URL](https://opencont
 ```bash
 $ noc browse
 ... (web browser opens)
+```
+
+Get (download) a list of Shots from a file (CSV, JSON, or YAML).
+
+```bash
+$ noc get shotlist.yaml
+Getting Shots...  [------------------------------------]    0%Downloading: sparks frames 5000-5001
+Downloading Frames... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:23
+Getting Shots...  [####################################]  100%
 ```
 
 ## Examples
